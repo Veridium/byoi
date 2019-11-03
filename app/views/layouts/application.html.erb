@@ -10,7 +10,12 @@
     <%= javascript_include_tag 'https://checkout.stripe.com/checkout.js' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="sidebar-mini">
+    <div class="wrapper">
+      <%= render partial: "layouts/header" %>
+      <div class="content-wrapper">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
