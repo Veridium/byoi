@@ -63,4 +63,11 @@ Rails.application.configure do
   # stripe payment keys
   config.stripe.secret_key = Rails.application.credentials.stripe[:development][:secret_key]
   config.stripe.publishable_key = Rails.application.credentials.stripe[:development][:publishable_key]
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+   :tls => false,
+   :address => "127.0.0.1",
+   :port => 1025,
+ }
 end
