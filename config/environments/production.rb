@@ -92,8 +92,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # stripe payment keys
-  config.stripe.secret_key = Rails.application.credentials.stripe[:production][:secret_key]
-  config.stripe.publishable_key = Rails.application.credentials.stripe[:production][:publishable_key]
+  #config.stripe.secret_key = Rails.application.credentials.stripe[:production][:secret_key]
+  #config.stripe.publishable_key = Rails.application.credentials.stripe[:production][:publishable_key]
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
