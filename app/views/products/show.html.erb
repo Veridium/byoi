@@ -1,9 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h2 class="m-0 text-dark">Showing Product</h2>
+      </div>
+      <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <span>
+              <div class="container">
+                <div class="row">
+                    <%= link_to 'Edit', edit_product_path(@product), :class => "btn btn-primary" %> <%= link_to 'Back', products_path, :class => "btn btn-primary" %>
+                </div>
+                <div class="row">
+                  <p>
+                    <strong>Name:</strong>
+                    <%= @product.name %>
+                  </p>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

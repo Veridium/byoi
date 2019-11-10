@@ -1,6 +1,34 @@
-<h1>Editing Discount</h1>
-
-<%= render 'form', discount: @discount %>
-
-<%= link_to 'Show', @discount %> |
-<%= link_to 'Back', discounts_path %>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2 class="m-0 text-dark">Editing Discount</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <span>
+                            <div class="container">
+                                <div class="row">
+                                    <%= link_to 'Show', @discount, :class => "btn btn-primary" %>
+                                    <%= link_to 'Back', discounts_path, :class => "btn btn-primary" %>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mt-4 text-center">
+                                        <%= render 'form', discount: @discount %>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

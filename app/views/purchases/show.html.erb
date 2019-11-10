@@ -1,19 +1,46 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @purchase.user_id %>
-</p>
-
-<p>
-  <strong>Plan:</strong>
-  <%= @purchase.plan_id %>
-</p>
-
-<p>
-  <strong>Discount:</strong>
-  <%= @purchase.discount_id %>
-</p>
-
-<%= link_to 'Edit', edit_purchase_path(@purchase) %> |
-<%= link_to 'Back', purchases_path %>
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h2 class="m-0 text-dark">Purchase</h2>
+      </div>
+      <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <span>
+              <div class="container">
+                <div class="row">
+                    <%= link_to 'Edit', edit_purchase_path(@purchase), :class => "btn btn-primary" %> <%= link_to 'Back', purchases_path, :class => "btn btn-primary" %>
+                </div>
+                <div class="row">
+                    <p>
+                        <strong>User:</strong>
+                        <%= @purchase.user_id %>
+                      </p>
+                      
+                      <p>
+                        <strong>Plan:</strong>
+                        <%= @purchase.plan_id %>
+                      </p>
+                      
+                      <p>
+                        <strong>Discount:</strong>
+                        <%= @purchase.discount_id %>
+                      </p>
+                      
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><p id="notice"><%= notice %></p>
