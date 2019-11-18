@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_07_184937) do
+ActiveRecord::Schema.define(version: 2019_11_10_230843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2019_11_07_184937) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "plan_id", null: false
+    t.index ["plan_id"], name: "index_discounts_on_plan_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -26,6 +28,7 @@ ActiveRecord::Schema.define(version: 2019_11_07_184937) do
     t.bigint "product_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "price_cents"
     t.index ["product_id"], name: "index_plans_on_product_id"
   end
 
@@ -41,6 +44,8 @@ ActiveRecord::Schema.define(version: 2019_11_07_184937) do
     t.bigint "discount_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "amount_cents"
+    t.string "currency"
     t.index ["discount_id"], name: "index_purchases_on_discount_id"
     t.index ["plan_id"], name: "index_purchases_on_plan_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
@@ -66,12 +71,13 @@ ActiveRecord::Schema.define(version: 2019_11_07_184937) do
     t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "stripe_id"
     t.boolean "admin", default: false
+    t.string "auth_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "discounts", "plans"
   add_foreign_key "purchases", "discounts"
   add_foreign_key "purchases", "plans"
   add_foreign_key "purchases", "users"

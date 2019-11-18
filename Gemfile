@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 #gem 'stripe-rails'
 gem 'square.rb'
+gem 'money-rails', '~>1.12'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
