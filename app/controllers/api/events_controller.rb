@@ -1,8 +1,26 @@
 class Api::EventsController < ApiController
-  before_action :set_user
+  before_action :set_user_by_email, only: :reset
+  before_action :set_user_with_confirmation, except: [:resend, :reset]
+  before_action :set_user_without_confirmation, only: :resend
 
   def plans
     render :json => Plan.all.to_json
+  end
+
+  def confirm
+    render :json => @user
+  end
+
+  def reset
+    @user.send_reset_password_instructions
+    render :json => @user
+  end
+
+  def resend
+    if @user.confirmed_at.nil?
+      Devise::Mailer.confirmation_instructions(@user,@user.confirmation_token).deliver
+    end
+    render :json => @user
   end
 
   def payment
@@ -49,11 +67,29 @@ class Api::EventsController < ApiController
   end
 
   private
+
+    def set_user_by_email
+      @user = User.find_by(email: params[:email])
+      if @user.nil?
+        render json: { "error":"Token failed verification (0)" }, status: 422 
+      end
+    end
     
-    def set_user
+    def set_user_with_confirmation
       @user = User.find_by(auth_token: params[:auth_token])
-      if @user.nil? || @user.confirmed_at.nil?
-        render json: { "error":"Token failed verification" }, status: 422 
+      if @user.nil?
+        render json: { "error":"Token failed verification (1)" }, status: 422 
+      elsif @user.confirmed_at.nil?
+        render json: { "error":"Token failed verification (2)" }, status: 422 
+      end
+    end
+
+    def set_user_without_confirmation
+      @user = User.find_by(auth_token: params[:auth_token])
+      if @user.nil?
+        render json: { "error":"Token failed verification (3)" }, status: 422 
+      elsif !@user.confirmed_at.nil?
+        render json: { "error":"Token failed verification (4)" }, status: 422 
       end
     end
 
