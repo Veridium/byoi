@@ -1,7 +1,7 @@
 class Api::EventsController < ApiController
-  #before_action :set_user_by_email, only: :reset
+  before_action :set_user_by_email, only: :reset
   before_action :set_user_with_confirmation, except: [:resend, :delete, :reset]
-  before_action :set_user_without_confirmation, only: [:resend, :delete, :reset]
+  before_action :set_user_without_confirmation, only: [:resend, :delete]
 
   def plans
     render :json => Plan.all.to_json
