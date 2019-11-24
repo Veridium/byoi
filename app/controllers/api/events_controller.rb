@@ -14,10 +14,10 @@ class Api::EventsController < ApiController
   def reset
     if @user.confirmed_at.nil?
       Devise::Mailer.confirmation_instructions(@user,@user.confirmation_token).deliver
-      render :json => { "message": "resent confirmation" }
+      render :json => { "message": "resent confirmation" }, status: 201
     else
       @user.send_reset_password_instructions
-      render :json => @user
+      render :json => { "message": "reset code sent" }
     end
   end
 
