@@ -1,7 +1,7 @@
 class Api::EventsController < ApiController
   #before_action :set_user_by_email, only: :reset
-  before_action :set_user_with_confirmation, except: [:resend]
-  before_action :set_user_without_confirmation, only: :resend
+  before_action :set_user_with_confirmation, except: [:resend, :delete]
+  before_action :set_user_without_confirmation, only: [:resend, :delete]
 
   def plans
     render :json => Plan.all.to_json
@@ -13,6 +13,12 @@ class Api::EventsController < ApiController
 
   def reset
     @user.send_reset_password_instructions
+    render :json => @user
+  end
+
+  def delete
+    @user.member.delete
+    @user.delete
     render :json => @user
   end
 
