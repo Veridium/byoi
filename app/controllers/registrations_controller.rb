@@ -5,7 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     super do
-      if resource.confirmed_at.nil? || resource.errors.empty?
+      if resource.errors.empty?
         resource.auth_token = SecureRandom.hex
         resource.save
       end

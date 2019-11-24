@@ -1,7 +1,7 @@
 class Api::EventsController < ApiController
   #before_action :set_user_by_email, only: :reset
-  before_action :set_user_with_confirmation, except: [:resend, :delete]
-  before_action :set_user_without_confirmation, only: [:resend, :delete]
+  before_action :set_user_with_confirmation, except: [:resend, :delete, :reset]
+  before_action :set_user_without_confirmation, only: [:resend, :delete, :reset]
 
   def plans
     render :json => Plan.all.to_json
@@ -12,7 +12,11 @@ class Api::EventsController < ApiController
   end
 
   def reset
-    @user.send_reset_password_instructions
+    if @user.confirmed_at.nil?
+      Devise::Mailer.confirmation_instructions(@user,@user.confirmation_token).deliver
+    else
+      @user.send_reset_password_instructions
+    end
     render :json => @user
   end
 
