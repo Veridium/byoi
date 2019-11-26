@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     :confirmations => 'confirmations',
     :passwords => 'passwords' }
   namespace :api do
+    post 'plan' => "events#plan"
     post 'plans' => "events#plans"
     post 'payment' => "events#payment"
     post 'confirm' => "events#confirm"

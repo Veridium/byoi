@@ -7,6 +7,10 @@ class Api::EventsController < ApiController
     render :json => Plan.all.to_json
   end
 
+  def plan
+    render :json => Plan.find(params[:planId])
+  end
+
   def confirm
     render :json => @user
   end
