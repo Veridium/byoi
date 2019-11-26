@@ -11,6 +11,12 @@ class Api::EventsController < ApiController
     render :json => Plan.find_by_name(params[:planName])
   end
 
+  def invoice
+    invoice = Invoice.new(@user,params[:plan_id],params[:discount_id])
+    invoice.save!
+    render :json => invoice
+  end
+
   def confirm
     render :json => @user
   end
