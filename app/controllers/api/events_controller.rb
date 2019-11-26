@@ -8,7 +8,7 @@ class Api::EventsController < ApiController
   end
 
   def plan
-    render :json => Plan.find(params[:planId])
+    render :json => Plan.find_by_name(params[:planName])
   end
 
   def confirm
