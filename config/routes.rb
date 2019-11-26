@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     post 'resend' => "events#resend"
     post 'reset' => "events#reset"
     post 'delete' => "events#delete"
+    post 'invoice' => "events#invoice"
   end
   root 'billing#index', as: :billing
   get "/:page" => "static#show"
