@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_171211) do
+ActiveRecord::Schema.define(version: 2019_11_26_220950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,15 +20,18 @@ ActiveRecord::Schema.define(version: 2019_11_26_171211) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "plan_id", null: false
+    t.integer "percentage"
     t.index ["plan_id"], name: "index_discounts_on_plan_id"
   end
 
   create_table "invoices", force: :cascade do |t|
     t.bigint "plan_id", null: false
     t.bigint "user_id", null: false
-    t.bigint "discount_id", null: false
+    t.bigint "discount_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "rebate_cents"
+    t.integer "total_cents"
     t.index ["discount_id"], name: "index_invoices_on_discount_id"
     t.index ["plan_id"], name: "index_invoices_on_plan_id"
     t.index ["user_id"], name: "index_invoices_on_user_id"

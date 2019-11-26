@@ -12,9 +12,13 @@ class Api::EventsController < ApiController
   end
 
   def invoice
-    invoice = Invoice.new(@user,params[:plan_id],params[:discount_id])
+    plan = Plan.find(params[:plan_id])
+    discount = Discount.find_by_name(params[:coupon])
+    rebate = plan.price * ((discount.nil? ? 0 : discount.percentage) / 100.0)
+    total = plan.price - rebate
+    invoice = Invoice.new(user:@user,plan:plan,discount:discount,rebate:rebate,total:total)
     invoice.save!
-    render :json => invoice
+    render :json => invoice, :include => {:plan => {:only => [:name,:price_cents]}, :discount => {:only => [:name,:percentage]}}
   end
 
   def confirm

@@ -1,19 +1,59 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Plan:</strong>
-  <%= @invoice.plan_id %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @invoice.user_id %>
-</p>
-
-<p>
-  <strong>Discount:</strong>
-  <%= @invoice.discount_id %>
-</p>
-
-<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
-<%= link_to 'Back', invoices_path %>
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h2 class="m-0 text-dark">Invoice</h2>
+      </div>
+      <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <span>
+              <div class="container">
+                <div class="row">
+                    <%= link_to 'Edit', edit_invoice_path(@invoice), :class => "btn btn-primary" %> <%= link_to 'Back', discounts_path, :class => "btn btn-primary" %>
+                </div>
+                <div class="row">
+                  <p>
+                    <strong>Id:</strong>
+                    <%= @invoice.id %>
+                  </p>
+                  <p>
+                    <strong>User:</strong>
+                    <%= @invoice.user.email %>
+                  </p>
+                  <p>
+                    <strong>Plan:</strong>
+                    <%= @invoice.plan.name %>
+                  </p>
+                  <p>
+                    <strong>Discount:</strong>
+                    <%= @invoice.discount.name %>
+                  </p>
+                  <p>
+                    <strong>Price:</strong>
+                    <%= @invoice.plan.price %>
+                  </p>
+                  <p>
+                    <strong>Rebate:</strong>
+                    <%= @invoice.rebate %>
+                  </p>
+                  <p>
+                    <strong>Total:</strong>
+                    <%= @invoice.total %>
+                  </p>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

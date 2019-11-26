@@ -21,6 +21,11 @@
     <%= form.select :plan_id, Plan.all.collect {|x| [x.name, x.id]}, {}, :multiple => false %>
   </div>
 
+  <div class="field">
+    <%= form.label :percentage %>
+    <%= form.number_field :percentage %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
