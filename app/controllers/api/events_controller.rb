@@ -49,8 +49,53 @@ class Api::EventsController < ApiController
   end
 
   def payment
-    client = Square::Client.new(access_token: "EAAAEKTgbbWKzhUnGjlGTU1Fx5SkHfnCqiQ4omZk7-MAGtEW1kajqFa5uRXN6YkI",
-                                environment: "sandbox")
+    client = Square::Client.new(access_token: ENV['SQUARE_TOKEN'],
+                                environment: ENV['SQUARE_ENVIRONMENT'])
+
+    # Call list_locations method to get all locations in this Square account
+    result = client.locations.list_locations
+
+    # Call the #success? method to see if the call succeeded
+    if result.success?
+      locationId = result.data.locations[0][:id]
+
+      invoice = Invoice.find(params[:invoice_id]);
+
+      orderRequest = {}
+      orderRequest[:idempotency_key] = SecureRandom.uuid
+      orderRequest[:order] = {}
+      orderRequest[:order][:line_items] = []
+      item = {}
+      item[:name] = invoice.plan.name
+      item[:quantity] = "1"
+      item[:base_price_money] = {}
+      item[:base_price_money][:amount] = invoice.total_cents
+      item[:base_price_money][:currency] = "USD"
+      orderRequest[:order][:line_items] << item
+
+      orderResult = client.orders.create_order(location_id: locationId, body: orderRequest)
+
+      paymentRequest = {}
+      paymentRequest[:source_id] = params[:nonce]
+      paymentRequest[:idempotency_key] = SecureRandom.uuid
+      paymentRequest[:amount_money] = {}
+      paymentRequest[:amount_money][:amount] = invoice.total_cents
+      paymentRequest[:amount_money][:currency] = "USD"
+      paymentRequest[:autocomplete] = true
+      paymentRequest[:location_id] = locationId
+      paymentRequest[:order_id] = orderResult.body.order[:id]
+
+      paymentResult = client.payments.create_payment(body: paymentRequest)
+
+      render :json => paymentResult.to_json
+    else
+      render :json => result.to_json, status: 422
+    end
+  end
+
+  def old_payment
+    client = Square::Client.new(access_token: ENV['SQUARE_TOKEN'],
+                                environment: ENV['SQUARE_ENVIRONMENT'])
 
     # Call list_locations method to get all locations in this Square account
     result = client.locations.list_locations
