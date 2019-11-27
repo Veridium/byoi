@@ -13,7 +13,7 @@ class Api::EventsController < ApiController
 
   def invoice
     plan = Plan.find(params[:plan_id])
-    discount = Discount.find_by_name(params[:coupon])
+    discount = Discount.where(:name => params[:coupon], :plan => plan).first
     rebate = plan.price * ((discount.nil? ? 0 : discount.percentage) / 100.0)
     total = plan.price - rebate
     invoice = Invoice.new(user:@user,plan:plan,discount:discount,rebate:rebate,total:total)
