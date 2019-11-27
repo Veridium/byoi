@@ -87,7 +87,21 @@ class Api::EventsController < ApiController
 
       paymentResult = client.payments.create_payment(body: paymentRequest)
 
-      render :json => paymentResult.to_json
+      purchase = Purchase.new(
+        user: @user,
+        invoice: invoice,
+        order_id: paymentResult.body.payment[:order_id],
+        payment_id: paymentResult.body.payment[:id],
+        cardbrand: paymentResult.body.payment[:card_details][:card][:card_brand],
+        lastfour: paymentResult.body.payment[:card_details][:card][:last_4],
+        fingerprint: paymentResult.body.payment[:card_details][:card][:fingerprint],
+        description: paymentResult.body.payment[:card_details][:statement_description],
+        amount_cents: paymentResult.body.payment[:total_money][:amount],
+        currency: paymentResult.body.payment[:total_money][:currency]
+      )
+      purchase.save!
+
+      render :json => purchase.to_json
     else
       render :json => result.to_json, status: 422
     end

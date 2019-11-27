@@ -25,8 +25,11 @@
                       <thead>
                         <tr>
                           <th>User</th>
-                          <th>Plan</th>
-                          <th>Discount</th>
+                          <th>Order ID</th>
+                          <th>Payment ID</th>
+                          <th>Amount</th>
+                          <th>Card</th>
+                          <th>Last4</th>
                           <th colspan="3"></th>
                         </tr>
                       </thead>
@@ -34,9 +37,12 @@
                       <tbody>
                         <% @purchases.each do |purchase| %>
                         <tr>
-                          <td><%= purchase.user_id %></td>
-                          <td><%= purchase.plan_id %></td>
-                          <td><%= purchase.discount_id %></td>
+                          <td><%= purchase.user.email %></td>
+                          <td><%= purchase.order_id %></td>
+                          <td><%= purchase.payment_id %></td>
+                          <td><%= purchase.amount %></td>
+                          <td><%= purchase.cardbrand %></td>
+                          <td><%= purchase.lastfour %></td>
                           <td><%= link_to 'Show', purchase, :class => "btn btn-primary" %></td>
                           <td><%= link_to 'Edit', edit_purchase_path(purchase), :class => "btn btn-primary" %></td>
                           <td>
