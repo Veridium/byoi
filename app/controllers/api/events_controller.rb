@@ -102,7 +102,7 @@ class Api::EventsController < ApiController
       purchase.save!
       EventMailer.with(user: @user, purchase: purchase).receipt_email.deliver
 
-      render :json => purchase.to_json
+      render :json => purchase, :include => {:user => {:only => [:email]}}
     else
       render :json => result.to_json, status: 422
     end
