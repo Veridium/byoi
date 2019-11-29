@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_27_183819) do
+ActiveRecord::Schema.define(version: 2019_11_29_203205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_11_27_183819) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "price_cents"
     t.string "description"
+    t.integer "duration"
     t.index ["product_id"], name: "index_plans_on_product_id"
   end
 
@@ -73,7 +74,10 @@ ActiveRecord::Schema.define(version: 2019_11_27_183819) do
     t.string "description"
     t.string "fingerprint"
     t.bigint "invoice_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "expires"
     t.index ["invoice_id"], name: "index_purchases_on_invoice_id"
+    t.index ["plan_id"], name: "index_purchases_on_plan_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -109,5 +113,6 @@ ActiveRecord::Schema.define(version: 2019_11_27_183819) do
   add_foreign_key "invoices", "users"
   add_foreign_key "members", "users"
   add_foreign_key "purchases", "invoices"
+  add_foreign_key "purchases", "plans"
   add_foreign_key "purchases", "users"
 end

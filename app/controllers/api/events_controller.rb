@@ -86,10 +86,16 @@ class Api::EventsController < ApiController
       paymentRequest[:order_id] = orderResult.body.order[:id]
 
       paymentResult = client.payments.create_payment(body: paymentRequest)
+      expires = nil
+      if !invoice.plan.duration.nil?
+        expires = Time.at(DateTime.now.to_i + invoice.plan.duration).to_datetime
+      end
 
       purchase = Purchase.new(
         user: @user,
         invoice: invoice,
+        plan: invoice.plan,
+        expires: expires,
         order_id: paymentResult.body.payment[:order_id],
         payment_id: paymentResult.body.payment[:id],
         cardbrand: paymentResult.body.payment[:card_details][:card][:card_brand],
@@ -102,7 +108,7 @@ class Api::EventsController < ApiController
       purchase.save!
       EventMailer.with(user: @user, purchase: purchase).receipt_email.deliver
 
-      render :json => purchase, :include => {:user => {:only => [:email]}}
+      render :json => purchase, :include => {:user => {:only => [:email]}, :plan => {:only => [:name]}}
     else
       render :json => result.to_json, status: 422
     end
