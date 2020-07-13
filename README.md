@@ -50,8 +50,8 @@ You can deploy this application to Heroku.
 
 * FROM_FOR_EMAIL:           no-reply@example.com
 * HOST_FOR_EMAIL:           example.herokuapp.com
-* SENDGRID_API_KEY:         <your sendgrid key>
-* SENDGRID_PASSWORD:        <your sendgrid password>
-* SENDGRID_USERNAME:        <your sendgrid username>
-* SQUARE_ENVIRONMENT:       <square environment - sandbox or production>
-* SQUARE_TOKEN:             <your square token>
+* SENDGRID_API_KEY:         your sendgrid key
+* SENDGRID_PASSWORD:        your sendgrid password
+* SENDGRID_USERNAME:        your sendgrid username
+* SQUARE_ENVIRONMENT:       square environment - sandbox or production
+* SQUARE_TOKEN:             your square token
