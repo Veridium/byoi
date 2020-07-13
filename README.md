@@ -36,3 +36,22 @@ redirected via an OIDC authorization flow back to the relying party
 (6, 7) and access is authorized depending on scoped attributes in the
 credential.
 
+# Deploy to Heroku
+
+You can deploy this application to Heroku.
+
+## Requirements/Dependencies
+
+* Postgres (database)
+* Sendgrid (for emails)
+* Square (for payments)
+
+## Variables
+
+* FROM_FOR_EMAIL:           no-reply@example.com
+* HOST_FOR_EMAIL:           example.herokuapp.com
+* SENDGRID_API_KEY:         <your sendgrid key>
+* SENDGRID_PASSWORD:        <your sendgrid password>
+* SENDGRID_USERNAME:        <your sendgrid username>
+* SQUARE_ENVIRONMENT:       <square environment - sandbox or production>
+* SQUARE_TOKEN:             <your square token>
