@@ -16,11 +16,11 @@ enrollment.
 The four parts of this demo includes:
 
 * Credential issuer (byoi - this repo)
-* Credential wallet (gbaid - a Flutter mobile app)
-* A sample relying party (gbarp)
-* An OIDC IdP that accepts (gbaidp)
+* Credential wallet ([gbaid](https://https://github.com/Veridium/gbaid) - a Flutter mobile app)
+* A sample relying party ([gbarp](https://github.com/Veridium/gbarp))
+* An OIDC IdP that accepts ([gbaidp](https://github.com/Veridium/gbaidp))
 
-The notional workflow is shown in th ediagram above: (A) a holder
+The notional workflow is shown in the diagram above: (A) a holder
 selects an issuer from the marketplace in their mobile app, provides
 enrollment information (e.g., email) and purchases their credentials;
 (B) a DID Document is created and written to the issuers registry (via
