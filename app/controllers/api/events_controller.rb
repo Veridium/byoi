@@ -8,7 +8,7 @@ class Api::EventsController < ApiController
   end
 
   def plan
-    render :json => Plan.find_by_name(params[:planName])
+    render :json => Plan.find_by_name(params[:planName]), :include => {:product => {:only => [:logo]}}
   end
 
   def invoice
@@ -16,7 +16,7 @@ class Api::EventsController < ApiController
     discount = Discount.where(:name => params[:coupon], :plan => plan).first
     rebate = plan.price * ((discount.nil? ? 0 : discount.percentage) / 100.0)
     total = plan.price - rebate
-    invoice = Invoice.new(user:@user,plan:plan,discount:discount,rebate:rebate,total:total)
+    invoice = Invoice.new(user:@user,plan:plan,discount:discount,rebate:rebate,total:total,icon:plan.product.logo)
     invoice.save!
     render :json => invoice, :include => {:plan => {:only => [:name,:price_cents]}, :discount => {:only => [:name,:percentage]}}
   end
@@ -96,6 +96,7 @@ class Api::EventsController < ApiController
         invoice: invoice,
         plan: invoice.plan,
         expires: expires,
+	icon: invoice.plan.product.icon,
         order_id: paymentResult.body.payment[:order_id],
         payment_id: paymentResult.body.payment[:id],
         cardbrand: paymentResult.body.payment[:card_details][:card][:card_brand],

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_203205) do
+ActiveRecord::Schema.define(version: 2020_07_25_184751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_203205) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "rebate_cents"
     t.integer "total_cents"
+    t.string "icon"
     t.index ["discount_id"], name: "index_invoices_on_discount_id"
     t.index ["plan_id"], name: "index_invoices_on_plan_id"
     t.index ["user_id"], name: "index_invoices_on_user_id"
@@ -59,6 +60,8 @@ ActiveRecord::Schema.define(version: 2019_11_29_203205) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "logo"
+    t.string "icon"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -76,6 +79,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_203205) do
     t.bigint "invoice_id", null: false
     t.bigint "plan_id", null: false
     t.datetime "expires"
+    t.string "icon"
     t.index ["invoice_id"], name: "index_purchases_on_invoice_id"
     t.index ["plan_id"], name: "index_purchases_on_plan_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
